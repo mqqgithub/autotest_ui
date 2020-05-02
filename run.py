@@ -16,7 +16,7 @@ discover = unittest.defaultTestLoader.discover(case_path, pattern='test*.py')
 def run():
     runner = HTMLReport.TestRunner(title="测试报告", description='测试deafult报告',
                                    output_path=report_path, report_file_name=report_name, thread_count=2)
-    runner.run(discover)
+    runner.run(discover, debug=False)
 
 
 if __name__ == "__main__":

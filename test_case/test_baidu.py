@@ -1,6 +1,7 @@
 from page_obj.baidu import Baidu
 import unittest, time
 from selenium import webdriver
+import logging as log
 chrome_capabilities = {
             'platform': 'ANY',
             'browserName': 'chrome',
@@ -22,15 +23,18 @@ class Test_Baidu(unittest.TestCase, Baidu):
         self.driver.quit()
 
     def test001(self):
+        log.info("测试搜索功能开始")
         self.search("selenium")
         time.sleep(1)
         self.assertEqual(self.search_result(), "selenium_百度搜索")
+        log.info("测试搜索功能结束")
 
     def test002(self):
+        log.info("测试单击新闻开始")
         self.click_news()
         time.sleep(1)
         self.assertIn("百度新闻", self.search_result())
-
+        log.info("测试单击新闻结束")
 
 if __name__ == "__main__":
     unittest.main()
