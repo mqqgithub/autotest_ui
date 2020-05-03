@@ -32,9 +32,10 @@ class Test_Baidu(unittest.TestCase, Baidu):
     def test002(self):
         log.info("测试单击新闻开始")
         self.click_news()
-        time.sleep(1)
+        time.sleep(2)
         self.assertIn("百度新闻", self.search_result())
         log.info("测试单击新闻结束")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -33,7 +33,7 @@ class BasePage(object):
             log.info(e)
 
     def get_element(self, loc):
-        log.info("查找单个页面没元素")
+        log.info("查找单个页面元素")
         self.wait_element_to_visible(loc)
         return self.driver.find_element(*loc)
 
