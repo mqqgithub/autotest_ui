@@ -14,7 +14,8 @@ class Test_Baidu(unittest.TestCase, Baidu):
 
     def setUp(self):
 
-        self.host = "http://192.168.2.128:4444/wd/hub"
+        # self.host = "http://2.0.1.54:4444/wd/hub"
+        self.host = 'http://192.168.170.26:4444/wd/hub'
         self.driver = webdriver.Remote(command_executor=self.host, desired_capabilities=chrome_capabilities)
         self.driver.maximize_window()
         self.driver.get("https://www.baidu.com")
@@ -31,11 +32,11 @@ class Test_Baidu(unittest.TestCase, Baidu):
 
     def test002(self):
         log.info("测试单击新闻开始")
-        self.click_news()
+        # self.click_news()
         time.sleep(2)
-        self.assertIn("百度新闻", self.search_result())
+        self.assertIn("百度新闻", self.click_news())
         log.info("测试单击新闻结束")
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
