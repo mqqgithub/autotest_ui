@@ -125,7 +125,7 @@ class BasePage(object):
             log.info("iframe返回上一级iframe失败")
 
     # 窗口切换 = 如果是切换到新窗口,new. 如果是回到默认的窗口,default
-    def switch_window(self, name, cur_handles=None, timeout=20, poll_frequency=0.5):
+    def switch_window(self, handle):
         """
         调用之前要获取window_handles
         :param name: new 代表最新打开的一个窗口. default 代表第一个窗口. 其他的值表示为窗口的 handles
@@ -136,21 +136,22 @@ class BasePage(object):
         :return:
         """
         try:
-            if name == 'new':
-                if cur_handles is not None:
-                    log.info('切换到最新打开的窗口')
-                    WebDriverWait(self.driver, timeout, poll_frequency).until(EC.new_window_is_opened(cur_handles))
-                    window_handles = self.driver.window_handles
-                    self.driver.swich_to.window(window_handles[-1])
-                else:
-                    log.exception('切换失败,没有要切换窗口的信息!!!')
+            if handle == 'new':
 
-            elif name == 'default':
+                window_handles = self.driver.window_handles
+                print(window_handles)
+                print(window_handles[-1])
+                self.driver.swich_to.window(window_handles[-1])
+                title = self.driver.title
+                print('title', title)
+                return title
+
+            elif handle == 'default':
                 log.info('切换到默认页面')
                 self.driver.switch_to.default()
             else:
                 log.info('切换到为 handles 的窗口')
-                self.driver.swich_to.window(name)
+                self.driver.swich_to.window(handle)
         except Exception as e:
             log.info('切换窗口失败!!!', e)
 

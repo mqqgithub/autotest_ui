@@ -18,10 +18,12 @@ class Baidu(BasePage):
     def click_news(self):
         self.get_element(self.loc_news_link).click()
         time.sleep(2)
-        self.switch_window('new')
+        title = self.switch_window('new')
+        print(title)
+        return title
 
     def search_result(self):
-        time.sleep(2)
+
         title = self.driver.title
         return title
 
