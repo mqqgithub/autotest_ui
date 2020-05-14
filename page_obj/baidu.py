@@ -1,6 +1,5 @@
 from common.base import BasePage
 from selenium.webdriver.common.by import By
-import time
 
 
 class Baidu(BasePage):
@@ -8,6 +7,9 @@ class Baidu(BasePage):
     loc_search_text = (By.ID, "kw")
     loc_search_btn = (By.ID, "su")
     loc_news_link = (By.XPATH, "//*[contains(text(),'新闻')]")
+
+    def __init__(self, driver):
+        super().__init__(driver)
 
     def input_search_text(self, content):
         self.get_element(self.loc_search_text).send_keys(content)
@@ -17,9 +19,7 @@ class Baidu(BasePage):
 
     def click_news(self):
         self.get_element(self.loc_news_link).click()
-        time.sleep(2)
-        title = self.switch_window('new')
-        print(title)
+        title = self.switch_window("new")
         return title
 
     def search_result(self):

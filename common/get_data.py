@@ -8,7 +8,7 @@ xls_path = "./data2.xls"
 csv_path = "./data3.csv"
 
 
-class GetData():
+class GetData(object):
 
     def __init__(self):
         pass

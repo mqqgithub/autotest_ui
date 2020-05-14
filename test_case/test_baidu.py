@@ -1,39 +1,31 @@
 from page_obj.baidu import Baidu
 import unittest, time
-from selenium import webdriver
+# from selenium import webdriver
+from ..common.browser_type import BrowserType
 import logging as log
-chrome_capabilities = {
-            'platform': 'ANY',
-            'browserName': 'chrome',
-            'version': '',
-            'javascriptEnabled': True
-        }
 
 
-class Test_Baidu(unittest.TestCase, Baidu):
+class Test_Baidu(unittest.TestCase):
 
     def setUp(self):
-
-        # self.host = "http://2.0.1.54:4444/wd/hub"
-        # self.host = 'http://192.168.170.26:4444/wd/hub'
-        self.host = 'http://localhost:4444/wd/hub'
-        self.driver = webdriver.Remote(command_executor=self.host, desired_capabilities=chrome_capabilities)
-        self.driver.maximize_window()
-        self.driver.get("https://www.baidu.com")
+        self.driver = BrowserType().get_url()
+        print(self.driver)
+        self.p = Baidu(self.driver)
 
     def tearDown(self):
         self.driver.quit()
 
     def test001(self):
         log.info("测试搜索功能开始")
-        self.search("selenium")
+        self.p.search("selenium")
         time.sleep(1)
-        self.assertEqual(self.search_result(), "selenium_百度搜索")
+        self.assertEqual(self.p.search_result(), "selenium_百度搜索")
         log.info("测试搜索功能结束")
 
+    # @unittest.skip('skip')
     def test002(self):
         log.info("测试单击新闻开始")
-        s = self.click_news()
+        s = self.p.click_news()
         time.sleep(2)
         self.assertIn("百度新闻", s)
         log.info("测试单击新闻结束")

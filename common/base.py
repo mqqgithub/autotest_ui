@@ -102,7 +102,7 @@ class BasePage(object):
         except:
             log.exception('iframe 切换失败!!!')
             # 截图
-            self.save_img(img_name)
+            self.get_screen()
 
     def switch_iframe_back_to_default(self):
         # 切回默认主页面
@@ -126,25 +126,19 @@ class BasePage(object):
 
     # 窗口切换 = 如果是切换到新窗口,new. 如果是回到默认的窗口,default
     def switch_window(self, handle):
-        """
-        调用之前要获取window_handles
-        :param name: new 代表最新打开的一个窗口. default 代表第一个窗口. 其他的值表示为窗口的 handles
-        :param cur_handles:
-        :param timeout:等待的上限
-        :param poll_frequency:轮询频率
-        :param img_name:等待失败时,截图操作,图片文件中需要表达的功能标注
-        :return:
-        """
+
         try:
             if handle == 'new':
 
-                self.window_handles = self.driver.window_handles
-                print(self.window_handles)
-                print(self.window_handles[-1])
-                self.driver.swich_to.window(self.window_handles[-1])
-                self.title = self.driver.title
-                print('title', self.title)
-                return self.title
+                handles = self.driver.window_handles
+                print(handles)
+                print(type(handles))
+                print(self.driver)
+                self.driver.swich_to.window(handles[-1])
+                print("xxxxxxxxxxxx")
+                title = self.driver.title
+                print('title', title)
+                return title
 
             elif handle == 'default':
                 log.info('切换到默认页面')
