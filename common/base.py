@@ -132,9 +132,11 @@ class BasePage(object):
 
                 handles = self.driver.window_handles
                 print(handles)
+                print(handles[-1])
                 print(type(handles))
                 print(self.driver)
                 self.driver.swich_to.window(handles[-1])
+                time.sleep(10)
                 print("xxxxxxxxxxxx")
                 title = self.driver.title
                 print('title', title)

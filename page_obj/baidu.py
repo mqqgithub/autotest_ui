@@ -20,6 +20,7 @@ class Baidu(BasePage):
     def click_news(self):
         self.get_element(self.loc_news_link).click()
         title = self.switch_window("new")
+        print(title)
         return title
 
     def search_result(self):
