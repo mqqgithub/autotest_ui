@@ -131,23 +131,13 @@ class BasePage(object):
             if handle == 'new':
 
                 handles = self.driver.window_handles
-                print(handles)
-                print(handles[-1])
-                print(type(handles))
-                print(self.driver)
-                self.driver.swich_to.window(handles[-1])
-                time.sleep(10)
-                print("xxxxxxxxxxxx")
-                title = self.driver.title
-                print('title', title)
-                return title
+                self.driver.switch_to.window(handles[-1])
+                time.sleep(5)
 
             elif handle == 'default':
                 log.info('切换到默认页面')
-                self.driver.switch_to.default()
-            else:
-                log.info('切换到为 handles 的窗口')
-                self.driver.swich_to.window(handle)
+                self.driver.switch_to.default_content()
+
         except Exception as e:
             log.info('切换窗口失败!!!', e)
 

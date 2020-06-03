@@ -19,7 +19,8 @@ class Baidu(BasePage):
 
     def click_news(self):
         self.get_element(self.loc_news_link).click()
-        title = self.switch_window("new")
+        self.switch_window("new")
+        title = self.driver.title
         print(title)
         return title
 
