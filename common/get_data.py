@@ -15,7 +15,7 @@ class GetData(object):
 
     def txt_data(self, path):
         with open(path, 'r+', encoding='utf-8') as f:
-            s = [i[:-1].split(',') for i in f.readlines()]  # 最后一行要回车
+            s = [i[:-1].split(',') for i in f]  # 最后一行要回车
             print(s)
             return s
 

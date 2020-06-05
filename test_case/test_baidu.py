@@ -1,7 +1,7 @@
 from page_obj.baidu import Baidu
 import unittest, time
 # from selenium import webdriver
-from ..common.browser_type import BrowserType
+from common.browser_type import BrowserType
 import logging as log
 
 
@@ -35,11 +35,11 @@ class Test_Baidu(unittest.TestCase):
     def test003(self):
         log.info("测试未来7天天气")
         self.p.move_loc_config()
-        time.sleep(2)
+        time.sleep(1)
         self.p.click_search_config()
-        time.sleep(1)
+        time.sleep(0.5)
         self.p.click_safe()
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.switch_to.alert.accept()
         print('ok!!!')
 

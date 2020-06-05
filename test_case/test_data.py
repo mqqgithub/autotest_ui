@@ -3,8 +3,8 @@ from ddt import ddt, data, unpack
 from common.get_data import GetData
 import unittest
 
-test_data = GetData().txt_data(r'D:/autotest_ui/common/data1.txt')
-# print(test_data)
+test_data = GetData().txt_data(r'D:/py/autotest_ui/test_case/data1.txt')
+print(test_data)
 
 # 使用前必须先声明
 @ddt
@@ -26,7 +26,7 @@ class Test(unittest.TestCase):
 
     @data(*test_data)  # data的数据必须是元祖，加*是把数据变成元祖类型  test_data 可以是函数*test_data()返回值
     @unpack
-    def test_3(self, a, b ,c):
+    def test_3(self, a, b, c):
         print(a)
         print(b)
         print(c)

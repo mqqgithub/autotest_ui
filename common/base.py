@@ -153,8 +153,9 @@ class BasePage(object):
     def move_to(self, loc):
         log.info('鼠标移动到元素上')
         try:
-            ActionChains(self.driver).move_to_element(loc).perform()
-            print('1234')
+            ele = self.get_element(loc)
+            ActionChains(self.driver).move_to_element(ele).perform()
+
         except Exception as e:
             log.info(e)
 
