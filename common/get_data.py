@@ -1,5 +1,5 @@
 '''
-获取数据
+获取数据  txt  xls cvs
 '''
 import xlrd, csv
 
