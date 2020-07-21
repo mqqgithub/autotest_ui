@@ -33,7 +33,7 @@ class Email(object):
         msg['To'] = receiver  # 邮件上显示的收件人
         msg['Subject'] = Header(mail_title, 'utf-8')  # 邮件主题
 
-        # ---这是文字部分---
+        # ---这是文字部分 邮件正文---
         part = MIMEText("接口自动化测试报告")
         msg.attach(part)
 
@@ -78,7 +78,7 @@ class Email(object):
 
 if __name__ == '__main__':
     # 测试地址
-    report_path = r"D:\interfaceTest\result\2019_11_08_11_00_25_report.html"
+    report_path = r"D:/py/autotest_ui/report/2020_06_05_10_43_49_report.html"
     # 类直接使用静态方法
     Email.send_email(report_path)
 

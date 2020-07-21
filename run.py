@@ -2,14 +2,14 @@ import time
 import os
 import unittest
 import HTMLReport
-from common.email import Email
+from common.emails import Email
 
 path = os.getcwd()
 case_path = os.path.join(path, "test_case")
 report_path = os.path.join(os.getcwd(), 'report')
 report_time = time.strftime("%Y_%m_%d_%H_%M_%S_")
 report_name = report_time + "report"
-report = report_path +r'\\'+report_name + '.html'
+report = report_path + r'\\' + report_name + '.html'
 
 discover = unittest.defaultTestLoader.discover(case_path, pattern='test*.py')
 

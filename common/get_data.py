@@ -1,21 +1,21 @@
 '''
-获取数据
+获取数据  txt  xls cvs
 '''
 import xlrd, csv
 
-txt_path = "./data1.txt"
-xls_path = "./data2.xls"
-csv_path = "./data3.csv"
+txt_path = r"./data1.txt"
+xls_path = r"./data2.xls"
+csv_path = r"./data3.csv"
 
 
-class GetData():
+class GetData(object):
 
     def __init__(self):
         pass
 
     def txt_data(self, path):
         with open(path, 'r+', encoding='utf-8') as f:
-            s = [i[:-1].split(',') for i in f.readlines()]  # 最后一行要回车
+            s = [i[:-1].split(',') for i in f]  # 最后一行要回车
             print(s)
             return s
 
