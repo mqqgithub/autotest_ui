@@ -116,10 +116,17 @@ class BasePage(object):
         log.info(f"单击{loc}")
         self.get_element(loc).click()
 
+    # 下拉框的value值定位
     def select_list_value(self, loc, value):
         log.info(f"选择下拉列表{value}")
         ele = self.get_element(loc)
         Select(ele).select_by_value(value)
+
+    # 取消所有选择
+    def deselect_all(self, loc, value):
+        log.info(f"选择下拉列表{value}")
+        ele = self.get_element(loc)
+        Select(ele).deselect_all()
 
     # loc=("id","xxx"),t="2016-12-25"
     def input_time_readonly(self, loc, t):
@@ -265,7 +272,15 @@ class BasePage(object):
         elif x == 'ENTER':
             self.get_element(loc).send_keys(Keys.ENTER)
 
+    def accept_alert(self):
+        log.info("alert点确定")
+        al = self.driver.switch_to_alert()
+        al.accept()
 
+    def dismiss_alert(self):
+        log.info("alert点取消")
+        al = self.driver.switch_to_alert()
+        al.dismiss()
 
 
 if __name__ == "__main__":
