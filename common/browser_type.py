@@ -29,7 +29,7 @@ class BrowserType(object):
 
         self.host = 'http://localhost:4444/wd/hub'
         self.driver = webdriver.Remote(command_executor=self.host, desired_capabilities=self.chrome_capabilities
-                                       ,options=self.options)
+                                       , options=self.options)
         self.driver.maximize_window()
 
     def get_url(self, url="https://www.baidu.com"):

@@ -4,6 +4,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 import time
 import logging as log
@@ -20,9 +21,36 @@ class BasePage(object):
         log.info("截取屏幕")
         self.driver.save_screenshot(self.img_name)
 
+    def input_url(self, url):
+        log.info(f"输入要访问的网址{url}")
+        self.driver.get(url)
+
+    def refresh(self):
+        log.info("刷新")
+        self.driver.refresh()
+
+    def go(self):
+        log.info("向前一页")
+        self.driver.forward()
+
+    def back(self):
+        log.info("向后一页")
+        self.driver.back()
+
+    def set_size(self, x, y):
+        log.info(f"设置浏览器尺寸{x}*{y}")
+        self.driver.set_window_size(x, y)
+
+    def max_window(self):
+        log.info("浏览器最大化")
+        self.driver.maxmize_window()
+
+    # loc = (By.ID, "su")
     def wait_element_to_visible(self, loc):
         try:
-            WebDriverWait(self.driver, 10, 0.5).until(EC.visibility_of_element_located(loc))
+            ele = WebDriverWait(self.driver, 10, 0.5).until(EC.visibility_of_element_located(loc))
+            return ele
+
         except Exception as e:
             self.get_screen()
             log.info(e)
@@ -35,30 +63,61 @@ class BasePage(object):
             log.info(e)
 
     def get_element(self, loc):
-        log.info("查找单个页面元素")
-        self.wait_element_to_visible(loc)
-        return self.driver.find_element(*loc)
+
+        '''
+            loc= (By.ID, 'id')
+            By.ID = "id"
+            By.XPATH = "xpath"
+            By.LINK_TEXT = "link text"
+            By.PARTIAL_LINK_TEXT = "partial link text"
+            By.NAME = "name"
+            By.TAG_NAME = "tag name"
+            By.CLASS_NAME = "class name"
+            By.CSS_SELECTOR = "css selector"
+
+            (By.XPATH,"//*[@id='kw']")
+            (By.XPATH,"//*[@name='wd']")
+            (By.XPATH,"//*[@class='s_ipt']")
+            (By.XPATH,"//*[@autocomplete='off']")
+            (By.XPATH,"//*[@id='kw']/input")
+            (By.XPATH,"//*[@id='kw']/input[1]")
+            (By.XPATH,"//*[@id='kw' and @class='s_ipt']”)
+            (By.XPATH,"//*[@id='kw' or @class='s_ipt']")
+            (By.XPATH,"//input[contains(@id,'kw')]")
+            (By.XPATH,"//*[contains(text(),'新闻')]")
+            (By.XPATH,'//*[text()="新闻"]')
+            (By.XPATH,"//*[contains(.,'新闻')]")
+            (By.XPATH,"//input[starts-with(@id,'nice')")
+            (By.XPATH,"//input[ends-with(@id,'很漂亮')")
+            (By.XPATH,"//input[contains(@id,'那么美')]")
+            (By.XPATH,"//*[contains(text(),'hao123')]/preceding-sibling::a")
+            (By.XPATH,"//*[contains(text(),'hao123')]/following-sibling::a")
+            (By.XPATH,"//*[contains(text(),'hao123')]/parent::div")
+        '''
+
+        log.info(f"查找单个页面元素{loc}")
+        return self.wait_element_to_visible(loc)
 
     def get_elements(self, loc):
-        log.info("查找多个页面元素")
+        log.info(f"查找多个页面元素{loc}")
         self.wait_element_to_visible(loc)
         return self.driver.find_elements(*loc)
 
     def input_text(self, loc, text):
-        log.info("输入文本")
+        log.info(f"{loc}中输入文本{text}")
         self.get_element(loc).send_keys(text)
 
     def clean_input_text(self, loc, text):
-        log.info("先清空，在输入文本")
+        log.info(f"{loc}先清空，在输入文本{text}")
         self.get_element(loc).clear()
         self.get_element(loc).send_keys(text)
 
     def click_element(self, loc):
-        log.info("单击")
+        log.info(f"单击{loc}")
         self.get_element(loc).click()
 
-    def select_list_element(self, loc, value):
-        log.info("选择下拉列表value")
+    def select_list_value(self, loc, value):
+        log.info(f"选择下拉列表{value}")
         ele = self.get_element(loc)
         Select(ele).select_by_value(value)
 
@@ -84,11 +143,11 @@ class BasePage(object):
             log.info("时间控件输入失败")
 
     def get_element_text(self, loc):
-        log.info("获取元素文本")
+        log.info(f"获取元素{loc}文本")
         return self.get_element(loc).text
 
     def get_element_attribute(self, loc, attr):
-        log.info("获取元素属性")
+        log.info(f"获取元素{loc}属性{attr}")
         return self.get_element(loc).get_attribute(attr)
 
     # iframe 切换
@@ -96,7 +155,7 @@ class BasePage(object):
         # 等待 iframe 存在
         log.info('iframe 切换操作:')
         try:
-            # 切换 == index\name\id\WebElement
+            # 切换frame_refer == index\name\id\WebElement
             WebDriverWait(self.driver, timeout, poll_frequency).until(
                 EC.frame_to_be_available_and_switch_to_it(frame_refer))
             time.sleep(0.5)
@@ -153,13 +212,60 @@ class BasePage(object):
 
     # 移动到指定元素
     def move_to(self, loc):
-        log.info('鼠标移动到元素上')
+        log.info(f'鼠标移动到元素{loc}上')
         try:
             ele = self.get_element(loc)
             ActionChains(self.driver).move_to_element(ele).perform()
 
         except Exception as e:
             log.info(e)
+
+    def context_click(self, loc):
+        log.info(f'右击元素{loc}上')
+        try:
+            ele = self.get_element(loc)
+            ActionChains(self.driver).context_click(ele).perform()
+
+        except Exception as e:
+            log.info(e)
+
+    def double_click(self, loc):
+        log.info(f'双击元素{loc}上')
+        try:
+            ele = self.get_element(loc)
+            ActionChains(self.driver).double_click(ele).perform()
+
+        except Exception as e:
+            log.info(e)
+
+    def drag_and_drop(self, loc1, loc2):
+        log.info(f'拖拽{loc1}移动到元素{loc2}上')
+        try:
+            ele1 = self.get_element(loc1)
+            ele2 = self.get_element(loc2)
+            ActionChains(self.driver).drag_and_drop(ele1, ele2).perform()
+
+        except Exception as e:
+            log.info(e)
+
+    def input_keys(self, loc, x):
+        log.info(f"元素{loc}输入x")
+        if x == 'C':
+            self.get_element(loc).send_keys(Keys.CONTROL, 'c')
+        elif x == 'V':
+            self.get_element(loc).send_keys(Keys.CONTROL, 'v')
+        elif x == 'A':
+            self.get_element(loc).send_keys(Keys.CONTROL, 'a')
+        elif x == 'X':
+            self.get_element(loc).send_keys(Keys.CONTROL, 'x')
+        elif x == 'F1':
+            self.get_element(loc).send_keys(Keys.F1)
+        elif x == 'TAB':
+            self.get_element(loc).send_keys(Keys.TAB)
+        elif x == 'ENTER':
+            self.get_element(loc).send_keys(Keys.ENTER)
+
+
 
 
 if __name__ == "__main__":

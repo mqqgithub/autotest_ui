@@ -3,9 +3,9 @@
 '''
 import xlrd, csv
 
-txt_path = "./data1.txt"
-xls_path = "./data2.xls"
-csv_path = "./data3.csv"
+txt_path = r"./data1.txt"
+xls_path = r"./data2.xls"
+csv_path = r"./data3.csv"
 
 
 class GetData(object):
