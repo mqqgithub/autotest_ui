@@ -43,7 +43,7 @@ class BasePage(object):
 
     def max_window(self):
         log.info("浏览器最大化")
-        self.driver.maxmize_window()
+        self.driver.maximize_window()
 
     # loc = (By.ID, "su")
     def wait_element_to_visible(self, loc):
