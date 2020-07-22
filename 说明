@@ -1,0 +1,26 @@
+1、安装
+python3.7
+selenium最新
+xlrd
+csv
+HTMLReport
+
+2、分布式
+java -jar selenium-server-standalone-3.8.1.jar -role node -port 5555
+java -jar selenium-server-standalone-3.8.1.jar -role node -port 5555
+
+3、jenkins
+F:
+cd F:\TOOLS\jenkins
+java -jar jenkins.war
+安装git插件
+poll  SCM
+设置查看源码时间
+window batch command
+D:
+cd D:\py\autotest001
+python run_all.py
+
+4、搭建本地git环境
+
+
