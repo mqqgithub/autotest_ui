@@ -1,14 +1,15 @@
 # 数据驱动测试，首先需要安装DDT包
 from ddt import ddt, data, unpack
 from common.get_data import GetData
-import unittest
-
-test_data = GetData().txt_data(r'D:/py/autotest_ui/test_case/data1.txt')
+import unittest,os
+path1 = os.path.join(os.path.dirname(os.path.realpath('__file__')), 'data1.txt')
+test_data = GetData().txt_data(path1)
 print(test_data)
+
 
 # 使用前必须先声明
 @ddt
-class Test(unittest.TestCase):
+class MyTest(unittest.TestCase):
     def setUp(self):
         print("test start...")
 

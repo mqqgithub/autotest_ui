@@ -15,7 +15,7 @@ class Test_Baidu(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-    @unittest.skip('skip')
+    # @unittest.skip('skip')
     def test001(self):
         log.info("测试搜索功能开始")
         self.p.search("selenium")
@@ -23,7 +23,7 @@ class Test_Baidu(unittest.TestCase):
         self.assertEqual(self.p.search_result(), "selenium_百度搜索")
         log.info("测试搜索功能结束")
 
-    @unittest.skip('skip')
+    # @unittest.skip('skip')
     def test002(self):
         log.info("测试单击新闻开始")
         self.p.click_news()
@@ -38,7 +38,7 @@ class Test_Baidu(unittest.TestCase):
         time.sleep(1)
         self.p.click_search_config()
         time.sleep(0.5)
-        self.p.click_safe()
+        self.p.click_save()
         time.sleep(0.5)
         self.driver.switch_to.alert.accept()
         print('ok!!!')

@@ -4,16 +4,13 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 dr = webdriver.Chrome()
-dr.get("https://www.tdft.cn/news.html")
-bp = BasePage(dr)
-bp.max_window()
-x = dr.find_element_by_xpath("//*[@id='app']/div[1]/div/ul/li[6]/a")
-ActionChains(dr).move_to_element(x).perform()
-y = dr.find_element_by_xpath("//*[@id='app']/div[1]/div/ul/li[6]/ul/li/a")
-y.click()
+dr.get("https://mail.163.com/")
+iframe = dr.find_element_by_xpath("//*[contains(@id, 'x-URS-iframe')]")
+dr.switch_to.frame(iframe)
+dr.find_element_by_name("email").send_keys("mqq508@163.com")
+dr.find_element_by_name("password").send_keys("mqq@123")
+dr.find_element_by_id("dologin").click()
 time.sleep(5)
 dr.quit()
 
 
-driver = webdriver.Chrome()
-handle = driver.current_window_handle
