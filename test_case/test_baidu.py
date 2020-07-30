@@ -38,7 +38,7 @@ class Test_Baidu(unittest.TestCase):
         time.sleep(1)
         self.p.click_search_config()
         time.sleep(0.5)
-        self.p.click_safe()
+        self.p.click_save()
         time.sleep(0.5)
         self.driver.switch_to.alert.accept()
         print('ok!!!')

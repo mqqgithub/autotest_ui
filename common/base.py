@@ -1,18 +1,19 @@
 # 封装webdriver方法
 
-
+from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
-import time
+import time, os
 import logging as log
 
 
 class BasePage(object):
 
-    img_name = r"d:\autotest_ui\report\img_name.png"
+    img_path = os.path.dirname(os.path.dirname(os.path.realpath("__file__")))
+    img_name = os.path.join(img_path, 'report') + r'\\'+time.strftime("%Y_%m_%d_%H_%M_%S_")+'_img_err.png'
 
     def __init__(self, driver):
         self.driver = driver
@@ -24,6 +25,9 @@ class BasePage(object):
     def input_url(self, url):
         log.info(f"输入要访问的网址{url}")
         self.driver.get(url)
+
+    def close_br(self):
+        self.driver.quit()
 
     def refresh(self):
         log.info("刷新")
@@ -158,17 +162,22 @@ class BasePage(object):
         return self.get_element(loc).get_attribute(attr)
 
     # iframe 切换
-    def switch_iframe(self, frame_refer, timeout=20, poll_frequency=0.5, img_name="iframe定位错误"):
+    def switch_iframe(self, frame_refer, timeout=20, poll_frequency=0.5):
         # 等待 iframe 存在
         log.info('iframe 切换操作:')
+        ele_iframe = self.driver.find_element(*frame_refer)
         try:
+            # 判断该frame是否可以switch进去，如果可以的话，返回True并且switch进去，否则返回False
+            # 注意这里并没有一个frame可以切换进去
+            # if WebDriverWait(self.driver, timeout, poll_frequency).
+            # until(EC.frame_to_be_available_and_switch_to_it(ele_iframe)):
             # 切换frame_refer == index\name\id\WebElement
-            WebDriverWait(self.driver, timeout, poll_frequency).until(
-                EC.frame_to_be_available_and_switch_to_it(frame_refer))
+            self.driver.switch_to.frame(ele_iframe)
             time.sleep(0.5)
             log.info('切换成功')
-        except:
-            log.exception('iframe 切换失败!!!')
+
+        except Exception as e:
+            log.exception(e)
             # 截图
             self.get_screen()
 
@@ -284,4 +293,8 @@ class BasePage(object):
 
 
 if __name__ == "__main__":
-    pass
+    dr = webdriver.Chrome()
+    p = BasePage(dr)
+    p.input_url("https://www.baidu.com")
+    p.get_screen()
+    p.close_br()
