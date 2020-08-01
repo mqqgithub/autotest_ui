@@ -15,7 +15,8 @@ class Test_Wangyi(unittest.TestCase):
         self.driver.quit()
 
     def test_login(self):
-        self.p.login_wang_yi()
+        self.p.login_wang_yi("mqq508@163.com", "mqq@123")
+        self.assertEqual(self.p.check_email_name(), 'mqq508@163.com')
 
 
 if __name__ == "__main__":
